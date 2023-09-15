@@ -1,0 +1,1 @@
+A node app to update the card database of CardSearcher Twitch bot
