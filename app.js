@@ -3,9 +3,10 @@ import express from 'express'
 import cors from 'cors'
 
 import { MONGODB_URI } from './utils/config.js'
+import { fetchAllData } from './utils/card_updater.js'
+import { checkRequestKeyHeader } from './utils/middleware.js'
 import { indexRouter } from './controllers/index.js'
 import { updateRouter } from './controllers/update.js'
-import { fetchAllData } from './utils/card_updater.js'
 
 
 
@@ -20,5 +21,5 @@ mongoose
   .catch(err => console.log('🟥 MONGODB ERROR:', err.message))
 
 app.use(cors())
-app.use('/', indexRouter)
-app.use('/api/update', updateRouter)
+app.use('/', checkRequestKeyHeader, indexRouter)
+app.use('/api/update', checkRequestKeyHeader, updateRouter)
