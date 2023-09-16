@@ -1,8 +1,10 @@
 import { requestOptions, YGOPD_API, YUGIPEDIA_RC } from './config.js'
-import { OcgCard } from '../models/card.js'
+import { OcgCard, RushCard, StrayCard } from '../models/card.js'
 import BotVariable from '../models/variable.js'
 
 let MAIN_CARDS
+let RUSH_CARDS
+let STRAY_CARDS
 let YGOPDCOUNT
 let YUGIPEDIA_LAST_UPDATE
 
@@ -11,7 +13,11 @@ let YUGIPEDIA_LAST_UPDATE
 export const fetchAllData = async () => {
   try {
     MAIN_CARDS = await OcgCard.find({}, 'name -_id').lean().exec()
+    RUSH_CARDS = await RushCard.find({}, 'name -_id').lean().exec()
+    STRAY_CARDS = await StrayCard.find({}, 'name -_id').lean().exec()
     console.log("🗃️  OCG/TCG CARDS:", MAIN_CARDS.length.toLocaleString('en-ph'))
+    console.log("🗃️  RUSH CARDS:", RUSH_CARDS.length.toLocaleString('en-ph'))
+    console.log("🗃️  STRAY CARDS:", STRAY_CARDS.length.toLocaleString('en-ph'))
 
     const ygoprodeck = await BotVariable.findOne({ name: 'YGOPRODeck' })
     YGOPDCOUNT = ygoprodeck.card_count
