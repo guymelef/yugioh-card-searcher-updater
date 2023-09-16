@@ -10,6 +10,7 @@ export const saveToDatabase = async (cards) => {
     try {
       const category = card.category
       const official = card.official
+      if (official) delete card.official
       delete card.category
 
       console.log(`📁 SAVING "${card.name}"...`)
