@@ -12,6 +12,6 @@ mongoose
   .then(async () => {
     console.log('Ⓜ️  Connected to MongoDB!')
     await fetchAllData()
-    server.listen(PORT, () => console.log(`🚀 THE SERVER IS UP AT: ${HOST}:${PORT}`))
+    server.listen(PORT, () => console.log(`🚀 THE SERVER IS UP AT: ${HOST}${PORT}`))
   })
   .catch(err => console.log('🟥 MONGODB ERROR:', err.message))
