@@ -21,7 +21,7 @@ export const saveToDatabase = async (cards) => {
     } catch (error) {
       if (error.code === 11000) {
         await new models[category].findOneAndReplace({ name: card.name }, card)
-        return console.log("♻️  REPLACED MONGOOSE ENTRY FOR: [%s]", card.name)
+        return console.log("♻️ CARD REPLACED IN DATABASE!")
       }
 
       console.log("🔴 MONGODB SAVE ERROR:", error.message)
