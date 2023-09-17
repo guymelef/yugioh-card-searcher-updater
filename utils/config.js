@@ -13,6 +13,7 @@ export const YUGIPEDIA_PAGEID = process.env.YUGIPEDIA_PAGEID
 export const YUGIPEDIA_PAGETITLE = process.env.YUGIPEDIA_PAGETITLE
 export const YUGIPEDIA_IMG = process.env.YUGIPEDIA_IMG
 export const BOT_RD_URL = process.env.BOT_RD_URL
+export const botRefreshDataRequestOption = { headers: { "X-Request-Key": `${SECRET_KEY}`} }
 export const requestOptions = {
   headers: { "User-Agent": `${process.env.BOT_USER_AGENT}` },
   redirect: 'follow'

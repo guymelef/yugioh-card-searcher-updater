@@ -1,5 +1,5 @@
 import { OcgCard, RushCard, StrayCard } from '../models/card.js'
-import { requestOptions, BOT_RD_URL } from './config.js'
+import { BOT_RD_URL, botRefreshDataRequestOption } from './config.js'
 
 
 
@@ -26,4 +26,4 @@ export const saveToDatabase = async (cards) => {
   }
 }
 
-export const refreshBotData = () => fetch(`${BOT_RD_URL}`, requestOptions)
+export const refreshBotData = () => fetch(`${BOT_RD_URL}`, botRefreshDataRequestOption)
