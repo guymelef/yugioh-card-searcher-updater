@@ -24,9 +24,9 @@ export const saveToDatabase = async (cards) => {
         return console.log("♻️  REPLACED MONGOOSE ENTRY FOR: [%s]", card.name)
       }
 
-      console.log("🔴 MONGODB SAVE ERROR:", err.message)
-      console.log("🔷", err.stack)
-      throw new Error(err.message)
+      console.log("🔴 MONGODB SAVE ERROR:", error.message)
+      console.log("🔷", error.stack)
+      throw new Error(error.message)
     }
   }
 }
