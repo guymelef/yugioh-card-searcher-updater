@@ -33,7 +33,6 @@ export const fetchAllData = async () => {
 }
 
 export const checkYgoprodeck = async () => {
-  await fetchAllData()
   let newCards = []
 
   let ygopdCards = await fetch(YGOPD_API)
@@ -67,7 +66,6 @@ export const checkYgoprodeck = async () => {
 }
 
 export const checkYugipedia = async () => {
-  await fetchAllData()
   let newCards = []
 
   const recentChanges = await fetch(`${YUGIPEDIA_RC}${YUGIPEDIA_LAST_UPDATE}`, requestOptions)
