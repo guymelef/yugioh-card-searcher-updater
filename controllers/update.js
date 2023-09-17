@@ -1,15 +1,15 @@
 import { Router } from "express"
-import { fetchFromYugipedia } from "../utils/yugipedia.js"
-import { saveToDatabase } from "../utils/database_updater.js"
-import { refreshBotData } from "../utils/database_updater.js"
-import { checkYgoprodeck, checkYugipedia } from "../utils/card_updater.js"
+
+import { fetchFromYugipedia } from "../utils/card_creator.js"
+import { saveToDatabase, refreshBotData } from "../utils/database_updater.js"
+import { checkYgoprodeck, checkYugipedia } from "../utils/update_checker.js"
 
 
 
 export const updateRouter = Router()
 
 updateRouter.get('/:src', (req, res) => {
-  const updateSources = { 'ygopd': checkYgoprodeck, 'yugipedia': checkYugipedia }
+  const updateSources = { 'ygoprodeck': checkYgoprodeck, 'yugipedia': checkYugipedia }
   const source = req.params.src
   const checkSource = updateSources[source]
 
@@ -17,7 +17,7 @@ updateRouter.get('/:src', (req, res) => {
     .then(async (cards) => {
       if (cards.length) {
         let newCards = []
-        if (source === 'ygopd') newCards = await fetchFromYugipedia(null, cards)
+        if (source === 'ygoprodeck') newCards = await fetchFromYugipedia(null, cards)
         else newCards = await fetchFromYugipedia(cards, null)
 
         await saveToDatabase(newCards)
@@ -34,7 +34,7 @@ updateRouter.get('/:src', (req, res) => {
         console.log('👍 CARD DB IS UP TO DATE!\n')
         res.json({
           source,
-          message: `[${source.toUpperCase()}] check finished, no new card(s) found`,
+          message: "check finished, no new card(s) found",
           timestamp: new Date().toLocaleString('en-ph')
         })
       }
