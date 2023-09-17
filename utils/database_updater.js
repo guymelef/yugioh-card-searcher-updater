@@ -19,6 +19,11 @@ export const saveToDatabase = async (cards) => {
       console.log(`💾 《 "${savedCard.name}" 》/${category.toUpperCase()} (${official ? 'official' : 'unofficial'})/ saved to MongoDb!`)
       console.log(card)
     } catch (error) {
+      if (error.code === 11000) {
+        await new models[category].findOneAndReplace({ name: card.name }, card)
+        return console.log("♻️  REPLACED MONGOOSE ENTRY FOR: [%s]", card.name)
+      }
+
       console.log("🔴 MONGODB SAVE ERROR:", err.message)
       console.log("🔷", err.stack)
       throw new Error(err.message)
