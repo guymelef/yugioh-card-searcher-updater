@@ -3,6 +3,7 @@ import { Router } from "express"
 import { fetchFromYugipedia } from "../utils/card_creator.js"
 import { saveToDatabase, refreshBotData } from "../utils/database_updater.js"
 import { checkYgoprodeck, checkYugipedia } from "../utils/update_checker.js"
+import { YUGIPEDIA_PAGE } from "../utils/config.js"
 
 
 
@@ -27,7 +28,10 @@ updateRouter.get('/:src', (req, res) => {
         res.json({
           source,
           message: `${cards.length} new card(s) found!`,
-          newCards: newCards.map(card => card.name),
+          newCards: newCards.map(card => ({
+            name: card.name,
+            page: `${YUGIPEDIA_PAGE}${card.pageId}`
+          })),
           timestamp: new Date().toLocaleString('en-ph')
         })
       } else {
