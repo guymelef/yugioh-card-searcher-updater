@@ -10,10 +10,12 @@ import { YUGIPEDIA_PAGE } from "../utils/config.js"
 export const updateRouter = Router()
 
 updateRouter.get('/:src', (req, res) => {
-  const updateSources = { 'ygoprodeck': checkYgoprodeck, 'yugipedia': checkYugipedia }
   const source = req.params.src
-  const checkSource = updateSources[source]
+  const updateSources = { 'ygoprodeck': checkYgoprodeck, 'yugipedia': checkYugipedia }
 
+  if (!["ygoprodeck", "yugipedia"].includes(source)) return res.status(403).end()
+  
+  const checkSource = updateSources[source]
   checkSource()
     .then(async (cards) => {
       if (cards.length) {

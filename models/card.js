@@ -14,3 +14,4 @@ const cardSchema = new Schema({
 export const OcgCard = model('OcgCard', cardSchema)
 export const RushCard = model('RushCard', cardSchema)
 export const StrayCard = model('StrayCard', cardSchema)
+export const YgopdCard = model('YgopdCard', cardSchema)
