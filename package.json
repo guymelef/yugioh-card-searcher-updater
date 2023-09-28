@@ -5,7 +5,8 @@
   "description": "A node app to update the card database of CardSearcher Twitch bot",
   "main": "index.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "dev": "nodemon server.js"
   },
   "keywords": [],
   "author": "",
