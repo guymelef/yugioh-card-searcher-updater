@@ -63,7 +63,7 @@ export const checkYgoprodeck = async () => {
     }
   })
 
-  if (newCards.length) newCards.forEach(card => new YgopdCard({ name: card })).save()
+  if (newCards.length) newCards.forEach(card => new YgopdCard({ name: card }).save())
 
   return newCards
 }
