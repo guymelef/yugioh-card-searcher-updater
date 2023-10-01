@@ -21,7 +21,7 @@ export const saveToDatabase = async (cards) => {
       console.log(card)
     } catch (error) {
       if (error.code === 11000) {
-        await new models[category].findOneAndReplace({ name: card.name }, card)
+        await models[category].findOneAndReplace({ name: card.name }, card)
         return console.log("♻️ CARD REPLACED IN DATABASE!")
       }
 
