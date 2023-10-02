@@ -24,7 +24,7 @@ export const fetchFromYugipedia = async (cardPageIds, cardPageTitles) => {
     const pages = wikiContent.query.pages
     if (pages.length) {
       for (let page of pages) {
-        const name = page.title.replace('(Rush Duel)', '')
+        const name = page.title.replace(' (Rush Duel)', '')
         wikitext = page.revisions[0].content
 
         let card = createYugipediaCard(name)
