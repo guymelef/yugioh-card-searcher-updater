@@ -13,11 +13,13 @@ searchRouter.post('/', async (req, res) => {
   const card = await fetchFromYugipedia(null, null, cardToSearchFor)
 
   let category = ''
+  let name = ''
   if (card.length) {
     category = card[0].category
+    name = card[0].name
     await saveToDatabase(card)
   }
 
   console.log("RESULT:", `[ ${card.length} ] card found`)
-  res.json({ match: card.length === 1, category })
+  res.json({ match: card.length === 1, category, name })
 })
