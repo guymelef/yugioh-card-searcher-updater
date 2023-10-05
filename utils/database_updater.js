@@ -34,6 +34,6 @@ export const saveToDatabase = async (cards) => {
 
 export const refreshBotData = () => {
   fetch(`${BOT_RD_URL}`, botRefreshDataRequestOption)
-    .then(res => console.log(res))
+    .then(res => console.log("RESPONSE:", res))
     .catch(err => console.log("ERROR REFRESHING BOT DATA:", err))
 }

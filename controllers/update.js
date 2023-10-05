@@ -20,11 +20,11 @@ updateRouter.get('/:src', (req, res) => {
     .then(async (cards) => {
       if (cards.length) {
         let newCards = []
-        if (source === 'ygoprodeck') newCards = await fetchFromYugipedia(null, cards)
-        else newCards = await fetchFromYugipedia(cards, null)
+        if (source === 'ygoprodeck') newCards = await fetchFromYugipedia(null, cards, null)
+        else newCards = await fetchFromYugipedia(cards, null, null)
 
         await saveToDatabase(newCards)
-        refreshBotData()
+        await refreshBotData()
         
         console.log(`⭐ NEW CARD(S) [${cards.length}] SAVED!\n`)
         res.json({

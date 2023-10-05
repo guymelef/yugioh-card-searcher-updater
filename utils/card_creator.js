@@ -1,14 +1,19 @@
-import { requestOptions, YUGIPEDIA_PAGEID, YUGIPEDIA_PAGETITLE, YUGIPEDIA_IMG } from "./config.js"
+import { requestOptions,
+  YUGIPEDIA_PAGEID,
+  YUGIPEDIA_PAGETITLE,
+  YUGIPEDIA_IMG,
+  YUGIPEDIA_SEARCH
+} from "./config.js"
 
 
 
 let wikitext = ""
 
-export const fetchFromYugipedia = async (cardPageIds, cardPageTitles) => {
+export const fetchFromYugipedia = async (cardPageIds, cardPageTitles, cardName) => {
   const CARDS = []
   
   try {
-    console.log(`📖 SEARCHING YUGIPEDIA... 【${cardPageIds || cardPageTitles}】`)
+    console.log(`📖 SEARCHING YUGIPEDIA... 【${cardPageIds || cardPageTitles || cardName}】`)
     let wikiContent
     
     if (cardPageIds) {
@@ -19,8 +24,17 @@ export const fetchFromYugipedia = async (cardPageIds, cardPageTitles) => {
       cardPageTitles = cardPageTitles.join('|')
       wikiContent = await fetch(`${YUGIPEDIA_PAGETITLE}${cardPageTitles}`, requestOptions)
       wikiContent = await wikiContent.json()
+    } else if (cardName) {
+      let response = await fetch(`${YUGIPEDIA_SEARCH}${encodeURIComponent(cardName)}`, requestOptions)
+      response = await response.json()
+
+      const pageId = response.query.search[0]?.pageid
+      if (!pageId) return CARDS
+
+      wikiContent = await fetch(`${YUGIPEDIA_PAGEID}${pageId}`, requestOptions)
+      wikiContent = await wikiContent.json()
     }
-    
+
     const pages = wikiContent.query.pages
     if (pages.length) {
       for (let page of pages) {
