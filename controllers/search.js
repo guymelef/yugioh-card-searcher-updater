@@ -41,7 +41,7 @@ searchRouter.post('/', async (req, res) => {
     fetch(BOT_STR_URL, saveToRedisOptions)
       .then(res => res.json())
       .then(json => console.log("RESPONSE:", json))
-      .catch(err => console.log("ERROR:", err))
+      .catch(err => console.log("REDIS SET ERROR:", err))
   }
   
   console.log("RESULT:", `[ ${card.length} ] card found`)

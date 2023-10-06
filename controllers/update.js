@@ -24,10 +24,10 @@ updateRouter.get('/:src', (req, res) => {
         else newCards = await fetchFromYugipedia(cards, null, null)
 
         await saveToDatabase(newCards)
-        fetch(`${BOT_RD_URL}`, botRefreshDataRequestOption)
+        fetch(BOT_RD_URL, botRefreshDataRequestOption)
           .then(res => res.json())
           .then(json => console.log("RESPONSE:", json))
-          .catch(err => console.log("ERROR REFRESHING BOT DATA:", err))
+          .catch(err => console.log("BOT DATA REFRESH ERROR:", err))
         
         console.log(`⭐ NEW CARD(S) [${cards.length}] SAVED!\n`)
         res.json({
