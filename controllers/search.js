@@ -1,7 +1,6 @@
 import { Router } from "express"
-import { Redis } from "ioredis"
 
-import { REDIS_URI } from "../utils/config.js"
+import { BOT_STR_URL, saveToRedisOptions } from "../utils/config.js"
 import { getCardInfo } from "../utils/cardinfo_creator.js"
 import { fetchFromYugipedia } from "../utils/card_creator.js"
 import { saveToDatabase } from "../utils/database_updater.js"
@@ -30,26 +29,21 @@ searchRouter.post('/', async (req, res) => {
     cardToSend = { ...card[0] }
     await saveToDatabase(card)
 
-    const redis = new Redis(REDIS_URI)
-    redis.on('connect', async () => {
-      console.log("🧲 REDIS connection established")
-      const prefix = cardToSend.category === "rush" ? 'searchr' : 'search'
-      const messagePrefix = cardToSend.category === 'rush' ? '🚀' : '🎴'
-      const responseMessage = `${messagePrefix} ${getCardInfo(cardToSend)}`
+    const prefix = cardToSend.category === "rush" ? 'searchr' : 'search'
+    const messagePrefix = cardToSend.category === 'rush' ? '🚀' : '🎴'
+    const responseMessage = `${messagePrefix} ${getCardInfo(cardToSend)}`
 
-      const isShort = responseMessage.length <= 500
-      const key = `${prefix}:${normalizeString(cardToSearchFor)}`
-      const value = JSON.stringify({ short: isShort, result: responseMessage })
-
-      try {
-        await redis.set(key, value)
-        console.log("💽 SAVED TO REDIS!")
-        redis.quit()
-      } catch (err) {
-        console.log("⚠️ REDIS SET ERROR:", err)
-      }
-    })
+    const isShort = responseMessage.length <= 500
+    const key = `${prefix}:${normalizeString(cardToSearchFor)}`
+    const value = JSON.stringify({ short: isShort, result: responseMessage })
+    const redisObj = JSON.stringify({ key, value })
+    saveToRedisOptions.body = redisObj
+    fetch(BOT_STR_URL, saveToRedisOptions)
+      .then(res => res.json())
+      .then(json => console.log("RESPONSE:", json))
+      .catch(err => console.log("ERROR:", err))
   }
+  
   console.log("RESULT:", `[ ${card.length} ] card found`)
   
   res.json({ match: card.length === 1, card: cardToSend })
