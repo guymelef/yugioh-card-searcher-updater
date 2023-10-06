@@ -24,7 +24,7 @@ updateRouter.get('/:src', (req, res) => {
         else newCards = await fetchFromYugipedia(cards, null, null)
 
         await saveToDatabase(newCards)
-        await refreshBotData()
+        refreshBotData()
         
         console.log(`⭐ NEW CARD(S) [${cards.length}] SAVED!\n`)
         res.json({
