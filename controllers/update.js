@@ -1,9 +1,9 @@
 import { Router } from "express"
 
 import { fetchFromYugipedia } from "../utils/card_creator.js"
-import { saveToDatabase, refreshBotData } from "../utils/database_updater.js"
+import { saveToDatabase } from "../utils/database_updater.js"
 import { checkYgoprodeck, checkYugipedia } from "../utils/update_checker.js"
-import { YUGIPEDIA_PAGE } from "../utils/config.js"
+import { YUGIPEDIA_PAGE, BOT_RD_URL, botRefreshDataRequestOption } from "../utils/config.js"
 
 
 
@@ -24,7 +24,10 @@ updateRouter.get('/:src', (req, res) => {
         else newCards = await fetchFromYugipedia(cards, null, null)
 
         await saveToDatabase(newCards)
-        refreshBotData()
+        fetch(`${BOT_RD_URL}`, botRefreshDataRequestOption)
+          .then(res => res.json())
+          .then(json => console.log("RESPONSE:", json))
+          .catch(err => console.log("ERROR REFRESHING BOT DATA:", err))
         
         console.log(`⭐ NEW CARD(S) [${cards.length}] SAVED!\n`)
         res.json({
