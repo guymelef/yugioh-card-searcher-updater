@@ -1,7 +1,6 @@
 import { requestOptions, YGOPD_API, YUGIPEDIA_RC } from './config.js'
 import { OcgCard, RushCard, StrayCard, YgopdCard } from '../models/card.js'
 import BotVariable from '../models/variable.js'
-import ignoredCards from '../data/cards-to-ignore.json' assert { type: "json" }
 
 let MAIN_CARDS
 let RUSH_CARDS
@@ -53,12 +52,9 @@ export const checkYgoprodeck = async () => {
     { card_count: YGOPDCOUNT, last_update: new Date().toLocaleString('en-ph') }
   )
   
-  const cardsInDb = await YgopdCard.find({}, 'name -_id').lean().exec()
-  const cardstoIgnore = ignoredCards
-  cardsInDb.forEach(card => cardstoIgnore.push(card.name))
-  
+  const cardsInDb = await YgopdCard.find({}, 'name -_id').lean().exec()  
   ygopdCards.forEach(card => {
-    if (!cardstoIgnore.includes(card.name)) {
+    if (!cardsInDb.includes(card.name)) {
       newCards.push(card.name)
     }
   })
