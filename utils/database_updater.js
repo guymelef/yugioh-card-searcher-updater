@@ -1,5 +1,4 @@
 import { OcgCard, RushCard, StrayCard } from '../models/card.js'
-import { BOT_RD_URL, botRefreshDataRequestOption } from './config.js'
 
 
 

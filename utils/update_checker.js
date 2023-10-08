@@ -52,7 +52,8 @@ export const checkYgoprodeck = async () => {
     { card_count: YGOPDCOUNT, last_update: new Date().toLocaleString('en-ph') }
   )
   
-  const cardsInDb = await YgopdCard.find({}, 'name -_id').lean().exec()  
+  let cardsInDb = await YgopdCard.find({}, 'name -_id').lean().exec()
+  cardsInDb = cardsInDb.map(card => card.name)
   ygopdCards.forEach(card => {
     if (!cardsInDb.includes(card.name)) {
       newCards.push(card.name)
@@ -90,8 +91,8 @@ export const checkYugipedia = async () => {
       { name: "Yugipedia" },
       { lastUpdate: YUGIPEDIA_LAST_UPDATE,
         lastCard: { 
-          title: newCardPages[0].title, 
-          pageid: newCardPages[0].pageid 
+          title: newCardPages[0].title,
+          pageid: newCardPages[0].pageid
         }
       }
     )
