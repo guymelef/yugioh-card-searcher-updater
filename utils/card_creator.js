@@ -122,7 +122,7 @@ const createYugipediaCard = (cardName) => {
     }
   }
 
-  if (types.includes('Skill') || wikitextSubstring.startsWith('{{duel links skill')) {
+  if ((types && types.includes('Skill')) || wikitextSubstring.startsWith('{{duel links skill')) {
     type = 'Skill'
     category = category || 'ocg'
 
