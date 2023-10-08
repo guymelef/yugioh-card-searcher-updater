@@ -1,6 +1,7 @@
 import { Router } from "express"
+import { Redis } from "ioredis"
 
-import { BOT_STR_URL, saveToRedisOptions } from "../utils/config.js"
+import { REDIS_URI } from "../utils/config.js"
 import { getCardInfo } from "../utils/cardinfo_creator.js"
 import { fetchFromYugipedia } from "../utils/card_creator.js"
 import { saveToDatabase } from "../utils/database_updater.js"
@@ -36,15 +37,18 @@ searchRouter.post('/', async (req, res) => {
     const isShort = responseMessage.length <= 500
     const key = `${prefix}:${normalizeString(cardToSearchFor)}`
     const value = JSON.stringify({ short: isShort, result: responseMessage })
-    const redisObj = JSON.stringify({ key, value })
-    saveToRedisOptions.body = redisObj
-    fetch(BOT_STR_URL, saveToRedisOptions)
-      .then(res => res.json())
-      .then(json => console.log("RESPONSE:", json))
-      .catch(err => console.log("REDIS SET ERROR:", err))
+
+    const redis = new Redis(REDIS_URI)
+    redis.on('connect', () => {
+      console.log("🧲 REDIS connection established")
+      redis.set(key, value, (err) => {
+        if (err) console.log("⚠️ REDIS SET ERROR:", err)
+        else console.log(`💽 SAVED TO REDIS! [ ${key} ]`)
+        redis.quit()
+      })
+    })
   }
   
   console.log("RESULT:", `[ ${card.length} ] card found`)
-  
   res.json({ match: card.length === 1, card: cardToSend })
 })
