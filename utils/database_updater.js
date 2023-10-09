@@ -19,7 +19,7 @@ export const saveToDatabase = async (cards) => {
       console.log(`💾 《 "${savedCard.name}" 》/${category.toUpperCase()} (${official ? 'official' : 'unofficial'})/ saved to MongoDb!`)
       console.log(card)
     } catch (error) {
-      if (error.code === 11000) {
+      if ([11000, 11001, 12582].includes(error.code)) {
         await models[category].findOneAndReplace({ name: card.name }, card)
         return console.log("♻️ CARD REPLACED IN DATABASE!")
       }

@@ -22,7 +22,7 @@ updateRouter.get('/:src', (req, res) => {
         let newCards = []
         if (source === 'ygoprodeck') newCards = await fetchFromYugipedia(null, cards, null)
         else newCards = await fetchFromYugipedia(cards, null, null)
-        console.log(`⭐ NEW CARD(S) [${cards.length}] FOUND!\n`)
+        console.log(`⭐ NEW CARD(S) [${newCards.length}] FOUND!\n`)
 
         await saveToDatabase(newCards)
         fetch(BOT_RD_URL, botRefreshDataRequestOption)
