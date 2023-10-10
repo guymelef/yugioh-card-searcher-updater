@@ -22,13 +22,13 @@ updateRouter.get('/:src', (req, res) => {
         let newCards = []
         if (source === 'ygoprodeck') newCards = await fetchFromYugipedia(null, cards, null)
         else newCards = await fetchFromYugipedia(cards, null, null)
-        console.log(`⭐ NEW CARD(S) [${newCards.length}] FOUND!\n`)
+        console.log(`📢 [${newCards.length}] NEW CARD(S) FOUND!\n`)
 
         await saveToDatabase(newCards)
         fetch(BOT_RD_URL, botRefreshDataRequestOption)
           .then(res => res.json())
-          .then(json => console.log("RESPONSE:", json))
-          .catch(err => console.log("BOT DATA REFRESH ERROR:", err))
+          .then(json => console.log("🤖 BOT RESPONSE:", json))
+          .catch(err => console.log("❌ BOT DATA REFRESH ERROR:", err))
         
         res.json({
           source,
@@ -40,7 +40,7 @@ updateRouter.get('/:src', (req, res) => {
           timestamp: new Date().toLocaleString('en-ph')
         })
       } else {
-        console.log('👍 CARD DB IS UP TO DATE!\n')
+        console.log('💯 CARD DB IS UP TO DATE!\n')
         res.json({
           source,
           message: "check finished, no new card(s) found",

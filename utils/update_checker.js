@@ -82,9 +82,7 @@ export const checkYugipedia = async () => {
     if (comment.includes('{{cardtable2') && item.timestamp !== YUGIPEDIA_LAST_UPDATE) return item
   })
 
-  if (newCardPages.length) {
-    console.log(`📢 [${newCardPages.length}] NEW YUGIPEDIA CARD(S) FOUND!`)
-    
+  if (newCardPages.length) {    
     YUGIPEDIA_LAST_UPDATE = newCardPages[0].timestamp
 
     await BotVariable.findOneAndUpdate(
