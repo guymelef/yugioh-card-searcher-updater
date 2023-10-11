@@ -21,12 +21,12 @@ export const saveToDatabase = async (cards) => {
     } catch (error) {
       if ([11000, 11001, 12582].includes(error.code)) {
         await models[category].findOneAndReplace({ name: card.name }, card)
-        return console.log("♻️ CARD REPLACED IN DATABASE!")
+        console.log("♻️ CARD REPLACED IN DATABASE!")
+      } else {
+        console.log("🔴 MONGODB SAVE ERROR:", error.message)
+        console.log("🔷", error.stack)
+        throw new Error(error.message)
       }
-
-      console.log("🔴 MONGODB SAVE ERROR:", error.message)
-      console.log("🔷", error.stack)
-      throw new Error(error.message)
     }
   }
 }

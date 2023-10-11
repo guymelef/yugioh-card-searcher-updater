@@ -15,7 +15,7 @@ updateRouter.get('/:src', (req, res) => {
   
   const updateSources = { 'ygoprodeck': checkYgoprodeck, 'yugipedia': checkYugipedia }
   const updateMark = source === "ygoprodeck" ? '🔸' : '🔹'
-  const updateMarkLength = source === "ygoprodeck" ? 15 : 30
+  const updateMarkLength = source === "ygoprodeck" ? 14 : 26
   const checkSource = updateSources[source]
   console.log(`\n${updateMark.repeat(updateMarkLength)}`)
   checkSource()
