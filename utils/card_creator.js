@@ -190,6 +190,11 @@ const getProperty = (prop) => {
   if (propValue) {
     propValue = propValue[0].split(' = ')
     propValue = propValue[1].trim()
+
+    if (prop === 'image' && !propValue) {
+      let image = getProperty('ja_image')
+      return image ? `${YUGIPEDIA_IMG}${image}` : `${YUGIPEDIA_IMG}Back-TF-EN-VG.png`
+    }
   } else {
     if (prop === 'image') {
       let image = getProperty('ja_image')
