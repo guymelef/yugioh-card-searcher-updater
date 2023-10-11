@@ -11,18 +11,20 @@ export const updateRouter = Router()
 
 updateRouter.get('/:src', (req, res) => {
   const source = req.params.src
-  const updateSources = { 'ygoprodeck': checkYgoprodeck, 'yugipedia': checkYugipedia }
-
   if (!["ygoprodeck", "yugipedia"].includes(source)) return res.status(403).end()
   
+  const updateSources = { 'ygoprodeck': checkYgoprodeck, 'yugipedia': checkYugipedia }
+  const updateMark = source === "ygoprodeck" ? '🔸' : '🔹'
+  const updateMarkLength = source === "ygoprodeck" ? 15 : 30
   const checkSource = updateSources[source]
+  console.log(`\n${updateMark.repeat(updateMarkLength)}`)
   checkSource()
     .then(async (cards) => {
       if (cards.length) {
         let newCards = []
         if (source === 'ygoprodeck') newCards = await fetchFromYugipedia(null, cards, null)
         else newCards = await fetchFromYugipedia(cards, null, null)
-        console.log(`📢 [${newCards.length}] NEW CARD(S) FOUND!\n`)
+        console.log(` 📢 [${newCards.length}] NEW CARD(S) FOUND!\n${updateMark.repeat(updateMarkLength)}\n`)
 
         await saveToDatabase(newCards)
         fetch(BOT_RD_URL, botRefreshDataRequestOption)
@@ -40,7 +42,7 @@ updateRouter.get('/:src', (req, res) => {
           timestamp: new Date().toLocaleString('en-ph')
         })
       } else {
-        console.log('💯 CARD DB IS UP TO DATE!\n')
+        console.log(` 💯 CARD DB IS UP TO DATE!\n${updateMark.repeat(updateMarkLength)}\n`)
         res.json({
           source,
           message: "check finished, no new card(s) found",
@@ -48,5 +50,5 @@ updateRouter.get('/:src', (req, res) => {
         })
       }
     })
-    .catch(err => res.json({ error: err.message } ))
+    .catch(err => res.json({ error: err.message }))
 })

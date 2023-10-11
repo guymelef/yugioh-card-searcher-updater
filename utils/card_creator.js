@@ -13,7 +13,7 @@ export const fetchFromYugipedia = async (cardPageIds, cardPageTitles, cardName) 
   const CARDS = []
   
   try {
-    console.log(`📖 SEARCHING YUGIPEDIA... 【${cardPageIds || cardPageTitles || cardName}】`)
+    console.log(` 📖 SEARCHING YUGIPEDIA... 【${cardPageIds || cardPageTitles || cardName}】`)
     let wikiContent
     
     if (cardPageIds) {

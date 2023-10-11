@@ -39,10 +39,8 @@ export const checkYgoprodeck = async () => {
   ygopdCards = await ygopdCards.json()
   ygopdCards = ygopdCards.data
     
-  console.log("=========================================")
-  console.log("MAIN CARDS COUNT: 🔸", MAIN_CARDS.length.toLocaleString('en-ph'))
-  console.log("YGOPRODECK COUNT: 🔸", ygopdCards.length.toLocaleString('en-ph'))
-  console.log("=========================================")
+  console.log(" MAIN CARDS COUNT: 🔸", MAIN_CARDS.length.toLocaleString('en-ph'))
+  console.log(" YGOPRODECK COUNT: 🔸", ygopdCards.length.toLocaleString('en-ph'))
 
   if (YGOPDCOUNT === ygopdCards.length) return newCards
   else YGOPDCOUNT = ygopdCards.length
@@ -72,10 +70,8 @@ export const checkYugipedia = async () => {
   let rc = await recentChanges.json()
   rc = rc.query.recentchanges
 
-  console.log('********************************************************')
-  console.log('LAST YUGIPEDIA CARD CREATED: 🕒', new Date(YUGIPEDIA_LAST_UPDATE).toLocaleString('en-ph'))
-  console.log('MOST RECENT CHANGE (NEW): 🕒', new Date(rc[0].timestamp).toLocaleString('en-ph'))
-  console.log('********************************************************')
+  console.log(' LAST YUGIPEDIA CARD CREATED: 🕒', new Date(YUGIPEDIA_LAST_UPDATE).toLocaleString('en-ph'))
+  console.log(' MOST RECENT CHANGE (NEW): 🕒', new Date(rc[0].timestamp).toLocaleString('en-ph'))
 
   let newCardPages = rc.filter(item => {
     const comment = item.comment.toLowerCase()
