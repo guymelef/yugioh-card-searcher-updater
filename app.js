@@ -2,9 +2,9 @@ import express from 'express'
 import mongoose from 'mongoose'
 import cors from 'cors'
 
-import { MONGODB_URI } from './utils/config.js'
-import { fetchAllData } from './utils/update_checker.js'
-import { checkRequestKeyHeader } from './utils/middleware.js'
+import { MONGODB_URI } from './config/config.js'
+import { fetchAllData } from './utils/update.js'
+import { checkRequestKeyHeader } from './middleware/middleware.js'
 import { indexRouter } from './controllers/index.js'
 import { updateRouter } from './controllers/update.js'
 import { searchRouter } from './controllers/search.js'
@@ -14,7 +14,7 @@ import { searchRouter } from './controllers/search.js'
 mongoose
   .connect(MONGODB_URI)
   .then(async () => {
-    console.log('Ⓜ️  Connected to MongoDB!')
+    console.log('Ⓜ️ Connected to MongoDB!')
     await fetchAllData()
   })
   .catch(err => console.log('🟥 MONGODB ERROR:', err.message))

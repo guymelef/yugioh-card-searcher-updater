@@ -1,10 +1,10 @@
 import { Router } from "express"
 import { Redis } from "ioredis"
 
-import { REDIS_URI } from "../utils/config.js"
-import { getCardInfo } from "../utils/cardinfo_creator.js"
-import { fetchFromYugipedia } from "../utils/card_creator.js"
-import { saveToDatabase } from "../utils/database_updater.js"
+import { REDIS_URI } from "../config/config.js"
+import { getCardInfo } from "../utils/cardinfo.js"
+import { fetchFromYugipedia } from "../utils/yugipedia.js"
+import { saveToDatabase } from "../utils/database.js"
 
 
 
@@ -49,6 +49,6 @@ searchRouter.post('/', async (req, res) => {
     })
   }
   
-  console.log("RESULT:", `[ ${card.length} ] card found`)
+  console.log("🔎 RESULT:", `[ ${card.length} ] card found`)
   res.json({ match: card.length === 1, card: cardToSend })
 })

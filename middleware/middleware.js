@@ -1,4 +1,4 @@
-import { SECRET_KEY } from "./config.js"
+import { SECRET_KEY } from "../config/config.js"
 
 
 export const checkRequestKeyHeader = (req, res, next) => {

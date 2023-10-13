@@ -1,7 +1,7 @@
 import http from "http"
 
 import { app } from "./app.js"
-import { HOST, PORT } from "./utils/config.js"
+import { HOST, PORT } from "./config/config.js"
 
 
 

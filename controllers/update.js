@@ -1,9 +1,9 @@
 import { Router } from "express"
 
-import { fetchFromYugipedia } from "../utils/card_creator.js"
-import { saveToDatabase } from "../utils/database_updater.js"
-import { checkYgoprodeck, checkYugipedia } from "../utils/update_checker.js"
-import { YUGIPEDIA_PAGE, BOT_RD_URL, botRefreshDataRequestOption } from "../utils/config.js"
+import { fetchFromYugipedia } from "../utils/yugipedia.js"
+import { saveToDatabase } from "../utils/database.js"
+import { checkYgoprodeck, checkYugipedia } from "../utils/update.js"
+import { YUGIPEDIA_PAGE, BOT_RD_URL, botRefreshDataRequestOption } from "../config/config.js"
 
 
 
@@ -24,13 +24,13 @@ updateRouter.get('/:src', (req, res) => {
         let newCards = []
         if (source === 'ygoprodeck') newCards = await fetchFromYugipedia(null, cards, null)
         else newCards = await fetchFromYugipedia(cards, null, null)
-        console.log(` 📢 [${newCards.length}] NEW CARD(S) FOUND!\n${updateMark.repeat(updateMarkLength)}\n`)
+        console.log(`📢 [${newCards.length}] NEW CARD(S) FOUND!\n${updateMark.repeat(updateMarkLength)}\n`)
 
         await saveToDatabase(newCards)
         fetch(BOT_RD_URL, botRefreshDataRequestOption)
           .then(res => res.json())
           .then(json => console.log("🤖 BOT RESPONSE:", json))
-          .catch(err => console.log("❌ BOT DATA REFRESH ERROR:", err))
+          .catch(err => console.log("🟥 BOT DATA REFRESH ERROR:", err))
         
         res.json({
           source,
@@ -42,7 +42,7 @@ updateRouter.get('/:src', (req, res) => {
           timestamp: new Date().toLocaleString('en-ph')
         })
       } else {
-        console.log(` 💯 CARD DB IS UP TO DATE!\n${updateMark.repeat(updateMarkLength)}\n`)
+        console.log(`💯 CARD DB IS UP TO DATE!\n${updateMark.repeat(updateMarkLength)}\n`)
         res.json({
           source,
           message: "check finished, no new card(s) found",

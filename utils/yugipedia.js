@@ -3,7 +3,7 @@ import { requestOptions,
   YUGIPEDIA_PAGETITLE,
   YUGIPEDIA_IMG,
   YUGIPEDIA_SEARCH
-} from "./config.js"
+} from "../config/config.js"
 
 
 
@@ -13,7 +13,7 @@ export const fetchFromYugipedia = async (cardPageIds, cardPageTitles, cardName) 
   const CARDS = []
   
   try {
-    console.log(` 📖 SEARCHING YUGIPEDIA... 【${cardPageIds || cardPageTitles || cardName}】`)
+    console.log(`📖 SEARCHING YUGIPEDIA... 【${cardPageIds || cardPageTitles || cardName}】`)
     let wikiContent
     
     if (cardPageIds) {
@@ -55,7 +55,7 @@ export const fetchFromYugipedia = async (cardPageIds, cardPageTitles, cardName) 
     
     return CARDS
   } catch (err) {
-    console.log(`🔴 YUGIPEDIA LOOKUP ERROR:`, err.message)
+    console.log(`🟥 YUGIPEDIA LOOKUP ERROR:`, err.message)
     console.log("🔷 STACK:", err.stack)
     return CARDS
   }

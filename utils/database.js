@@ -23,8 +23,8 @@ export const saveToDatabase = async (cards) => {
         await models[category].findOneAndReplace({ name: card.name }, card)
         console.log("♻️ CARD REPLACED IN DATABASE!")
       } else {
-        console.log("🔴 MONGODB SAVE ERROR:", error.message)
-        console.log("🔷", error.stack)
+        console.log("🟥 MONGODB SAVE ERROR:", error.message)
+        console.log("🔷 STACK:", error.stack)
         throw new Error(error.message)
       }
     }
