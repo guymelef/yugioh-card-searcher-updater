@@ -15,17 +15,17 @@ export const fetchAllData = async () => {
     MAIN_CARDS = await OcgCard.find({}, 'name -_id').lean().exec()
     RUSH_CARDS = await RushCard.find({}, 'name -_id').lean().exec()
     STRAY_CARDS = await StrayCard.find({}, 'name -_id').lean().exec()
-    console.log("🗃️ OCG/TCG CARDS:", MAIN_CARDS.length.toLocaleString('en-ph'))
+    console.log("🗃️ MAIN CARDS:", MAIN_CARDS.length.toLocaleString('en-ph'))
     console.log("🗃️ RUSH CARDS:", RUSH_CARDS.length.toLocaleString('en-ph'))
     console.log("🗃️ STRAY CARDS:", STRAY_CARDS.length.toLocaleString('en-ph'))
 
     const ygoprodeck = await BotVariable.findOne({ name: 'YGOPRODeck' })
     YGOPDCOUNT = ygoprodeck.card_count
-    console.log(`⏺️ YGOPRODECK CARD COUNT (${ygoprodeck.last_update}): 💠 ${YGOPDCOUNT.toLocaleString('en-ph')}`)
+    console.log(`⭐ YGOPRODECK CARD COUNT (${ygoprodeck.last_update}): 💠 ${YGOPDCOUNT.toLocaleString('en-ph')}`)
 
     const yugipedia = await BotVariable.findOne({ name: 'Yugipedia' })
     YUGIPEDIA_LAST_UPDATE = yugipedia.lastUpdate
-    console.log(`⏺️ YUGIPEDIA LAST UPDATE: 💠 ${new Date(YUGIPEDIA_LAST_UPDATE).toLocaleString('en-ph')}`)
+    console.log(`⭐ YUGIPEDIA LAST UPDATE: 💠 ${new Date(YUGIPEDIA_LAST_UPDATE).toLocaleString('en-ph')}`)
   } catch (err) {
     console.log("🟥 CARDS FETCH ERROR:", err.message)
     console.log("🔷 STACK:", err.stack)

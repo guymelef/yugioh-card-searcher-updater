@@ -42,7 +42,7 @@ searchRouter.post('/', async (req, res) => {
     redis.on('connect', () => {
       console.log("🧲 REDIS connection established")
       redis.set(key, value, (err) => {
-        if (err) console.log("⚠️ REDIS SET ERROR:", err)
+        if (err) console.log("🟥 REDIS SET ERROR:", err)
         else console.log(`💽 SAVED TO REDIS! [ ${key} ]`)
         redis.quit()
       })
